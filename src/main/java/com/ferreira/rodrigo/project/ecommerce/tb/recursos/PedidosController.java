@@ -23,7 +23,7 @@ public class PedidosController {
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
-		Pedido objBusca = service.buscarPedido(id);
+	 Pedido objBusca = service.buscarPedido(id);
 		return ResponseEntity.ok().body(objBusca);
 	}
 	

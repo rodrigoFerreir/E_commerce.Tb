@@ -37,7 +37,7 @@ public class ClienteService {
 				"Objeto não encontrado! Id: " + id + ". Tipo: " + Cliente.class.getName()));
 	}
 
-	public List<Cliente> buscarTodos() { // buscando todas as categorias.
+	public List<Cliente> buscarTodos() { // buscando todas os clientes.
 		return repo.findAll();
 	}
 	

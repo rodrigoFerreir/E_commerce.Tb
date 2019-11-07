@@ -24,6 +24,10 @@ public class ProdutoService {
 	@Autowired
 	private RepositorioCategorias repositorioCategorias;
 	
+	public List<Produto> buscarTodos() { // buscando todas os Produtos.
+		return repositorioProduto.findAll();
+	}
+	
 	public Produto buscarProduto(Integer id) { // sempre que for pesquisar por id
 		Optional<Produto> cliente = repositorioProduto.findById(id);
 		return cliente.orElseThrow(() -> new ObjectNotFundExcepion(

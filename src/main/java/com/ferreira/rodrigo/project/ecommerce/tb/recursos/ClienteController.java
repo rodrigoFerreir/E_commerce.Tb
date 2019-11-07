@@ -30,14 +30,12 @@ public class ClienteController {
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
-
 		Cliente objBusca = service.buscarCliente(id);
 		return ResponseEntity.ok().body(objBusca);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List <ClienteDTO>> buscarTodos() {
-		System.out.println("ok controller");
 		List <Cliente> listBusca = service.buscarTodos();
 		List <ClienteDTO> listDTO = listBusca.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);

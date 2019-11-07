@@ -33,10 +33,11 @@ public class PedidoService {
 	
 	@Autowired
 	private RepositorioItensPedidos repositorioItensPedidos;
+
 	
-	public Pedido buscarPedido(Integer id) { // sempre que for pesquisar por id
-		Optional<Pedido> cliente = repositorioPedido.findById(id);
-		return cliente.orElseThrow(() -> new ObjectNotFundExcepion(
+	public Pedido buscarPedido(Integer id) {  // sempre que for pesquisar por id
+		Optional<Pedido> obj = repositorioPedido.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFundExcepion(
 				"Objeto não encontrado! Id: " + id + ". Tipo: " + Pedido.class.getName()));
 	}
 	

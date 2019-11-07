@@ -1,6 +1,7 @@
 package com.ferreira.rodrigo.project.ecommerce.tb.recursos;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,14 @@ import com.ferreira.rodrigo.project.ecommerce.tb.servicos.ProdutoService;
 public class ProdutoController {
 	@Autowired
 	private ProdutoService service; 
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List <ProdutoDTO>> buscarTodos() {		
+		List <Produto> listBusca = service.buscarTodos();
+		List <ProdutoDTO> listDTO = listBusca.stream().map(obj -> new ProdutoDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
+		
+	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Produto> find(@PathVariable Integer id) {
