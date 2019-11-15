@@ -150,7 +150,7 @@ public class Pedido implements Serializable {
 		builder.append(", Cliente: ");
 		builder.append(getCliente().getNome());
 		builder.append(", Situação do pagamento: ");
-		builder.append(getPagamento().getEstado());
+		builder.append(getPagamento().getEstado().getDesc());
 		builder.append("\nDetalhes:\n");
 		for (ItemPedido ip : getItens()) {
 			builder.append(ip.toString());

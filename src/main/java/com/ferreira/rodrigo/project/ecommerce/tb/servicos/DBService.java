@@ -20,6 +20,7 @@ import com.ferreira.rodrigo.project.ecommerce.tb.model.PagamentoComCartao;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.Pedido;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.Produto;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.enuns.EstadoPagamento;
+import com.ferreira.rodrigo.project.ecommerce.tb.model.enuns.Perfil;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.enuns.TipoCliente;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioCategorias;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioCidade;
@@ -101,30 +102,40 @@ public class DBService {
 
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
+		Estado est3 = new Estado(null, "Pernambuco");
 
 		Cidade c1 = new Cidade(null, "Uberlândia", est1);
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
+		Cidade c4 = new Cidade(null, "Bom Jardim", est3);
 
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
+		est3.getCidades().addAll(Arrays.asList(c4));
 
-		estadoRepository.saveAll(Arrays.asList(est1, est2));
-		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+
+		estadoRepository.saveAll(Arrays.asList(est1, est2, est3));
+		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3, c4));
 
 		Cliente cli1 = new Cliente(null, "Maria Silva", "36378912377", "maria@gmail.com", TipoCliente.PESSOAFISICA, Bcrypt.encode("15467548"));
 		Cliente cli2 = new Cliente(null, "Rodrigo da Silva", "36375476582", "RodrigoS@gmail.com", TipoCliente.PESSOAJURIDICA, Bcrypt.encode("367687557"));
+		Cliente cli3 = new Cliente(null, "Administrador", "55778855441", "RodrigoFerreira@teste.com", TipoCliente.PESSOAJURIDICA, Bcrypt.encode("admin"));
+		cli3.addPerfil(Perfil.ADMIN);
 
-		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
 		Endereco e3 = new Endereco(null, "Altos do Mestre", "255", "Apto 8", "Zona Sul", "55572500", cli2, c3);
+		Endereco e4 = new Endereco(null, "Sitio da Mangueira", "000", null, "Zona Rural", "55730000", cli3, c4);
 
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
+		cli3.getEnderecos().addAll(Arrays.asList(e4));
 
-		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
+
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2, cli3));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3, e4));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
