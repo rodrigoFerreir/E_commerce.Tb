@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.DataIntegrityException;
-import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFundExcepion;
+import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFoundException;
 //tratamrento de erro com Hendler
 @ControllerAdvice
 public class ResourceExceptionHendler {
 	
-	@ExceptionHandler(ObjectNotFundExcepion.class)
-	public ResponseEntity<StandardError> objectNotFound(ObjectNotFundExcepion e, HttpServletRequest request){
+	@ExceptionHandler(ObjectNotFoundException.class)
+	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
 		
 		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);

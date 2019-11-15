@@ -3,6 +3,7 @@ package com.ferreira.rodrigo.project.ecommerce.tb.servicos;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -13,8 +14,8 @@ import org.springframework.stereotype.Service;
 import com.ferreira.rodrigo.project.ecommerce.tb.dto.CategoriaDTO;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.Categoria;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioCategorias;
-import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.DataIntegrityException;
-import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFundExcepion;
+import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.*;
+
 
 @Service
 public class CategoriaService {
@@ -22,11 +23,12 @@ public class CategoriaService {
 	@Autowired
 	private RepositorioCategorias repo;
 	
-	public Categoria buscarCategoria(Integer id) { // sempre que for pesquisar por id
-		Optional<Categoria> categ = repo.findById(id);
-		return categ.orElseThrow(() -> new ObjectNotFundExcepion(
-				"Objeto não encontrado! Id: " + id + ". Tipo: " + Categoria.class.getName()));
+	public Categoria buscarCategoria(Integer id) {
+		Optional<Categoria> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName(), null));
 	}
+	
 
 	public List<Categoria> buscarTodos() { // buscando todas as categorias.
 		return repo.findAll();

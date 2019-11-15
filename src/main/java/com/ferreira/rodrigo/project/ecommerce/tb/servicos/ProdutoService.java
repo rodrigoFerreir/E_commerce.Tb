@@ -13,7 +13,7 @@ import com.ferreira.rodrigo.project.ecommerce.tb.model.Categoria;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.Produto;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioCategorias;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioProdutos;
-import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFundExcepion;
+import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -28,10 +28,10 @@ public class ProdutoService {
 		return repositorioProduto.findAll();
 	}
 	
-	public Produto buscarProduto(Integer id) { // sempre que for pesquisar por id
-		Optional<Produto> cliente = repositorioProduto.findById(id);
-		return cliente.orElseThrow(() -> new ObjectNotFundExcepion(
-				"Objeto não encontrado! Id: " + id + ". Tipo: " + Produto.class.getName()));
+	public Produto buscarProduto(Integer id) {
+		Optional<Produto> obj = repositorioProduto.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
 	}
 	
 	public Page<Produto> buscar(String nome, List<Integer> ids, Integer page, Integer linhasPorPaginas, String direction, String orderBy) {

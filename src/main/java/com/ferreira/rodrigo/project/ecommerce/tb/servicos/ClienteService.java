@@ -20,7 +20,7 @@ import com.ferreira.rodrigo.project.ecommerce.tb.model.enuns.TipoCliente;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioCliente;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioEndereco;
 import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.DataIntegrityException;
-import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFundExcepion;
+import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
@@ -33,7 +33,7 @@ public class ClienteService {
 
 	public Cliente buscarCliente(Integer id) { // sempre que for pesquisar por id
 		Optional<Cliente> cliente = repo.findById(id);
-		return cliente.orElseThrow(() -> new ObjectNotFundExcepion(
+		return cliente.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ". Tipo: " + Cliente.class.getName()));
 	}
 

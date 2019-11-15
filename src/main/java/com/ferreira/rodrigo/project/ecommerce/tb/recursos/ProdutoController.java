@@ -27,7 +27,6 @@ public class ProdutoController {
 		List <Produto> listBusca = service.buscarTodos();
 		List <ProdutoDTO> listDTO = listBusca.stream().map(obj -> new ProdutoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
-		
 	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)

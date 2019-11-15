@@ -14,7 +14,7 @@ import com.ferreira.rodrigo.project.ecommerce.tb.model.enuns.EstadoPagamento;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioItensPedidos;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioPagamento;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioPedidos;
-import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFundExcepion;
+import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFoundException;
 
 @Service
 public class PedidoService {
@@ -37,7 +37,7 @@ public class PedidoService {
 	
 	public Pedido buscarPedido(Integer id) {  // sempre que for pesquisar por id
 		Optional<Pedido> obj = repositorioPedido.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFundExcepion(
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ". Tipo: " + Pedido.class.getName()));
 	}
 	
