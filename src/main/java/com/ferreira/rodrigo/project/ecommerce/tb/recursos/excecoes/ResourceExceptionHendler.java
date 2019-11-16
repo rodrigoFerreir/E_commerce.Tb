@@ -9,8 +9,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.AuthorizationException;
 import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.DataIntegrityException;
 import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFoundException;
+
 //tratamrento de erro com Hendler
 @ControllerAdvice
 public class ResourceExceptionHendler {
@@ -38,5 +40,12 @@ public class ResourceExceptionHendler {
 			err.addError(x.getField(), x.getDefaultMessage());
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> DataValidation(AuthorizationException e, HttpServletRequest request){
+		
+		ValidationError err = new ValidationError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 	}
 }

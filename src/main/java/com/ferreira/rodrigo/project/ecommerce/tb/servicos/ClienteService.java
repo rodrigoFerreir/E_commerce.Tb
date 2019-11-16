@@ -17,9 +17,12 @@ import com.ferreira.rodrigo.project.ecommerce.tb.dto.NewClienteDTO;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.Cidade;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.Cliente;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.Endereco;
+import com.ferreira.rodrigo.project.ecommerce.tb.model.enuns.Perfil;
 import com.ferreira.rodrigo.project.ecommerce.tb.model.enuns.TipoCliente;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioCliente;
 import com.ferreira.rodrigo.project.ecommerce.tb.repositorio.RepositorioEndereco;
+import com.ferreira.rodrigo.project.ecommerce.tb.security.UserSecurity;
+import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.AuthorizationException;
 import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.DataIntegrityException;
 import com.ferreira.rodrigo.project.ecommerce.tb.servicos.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,12 @@ public class ClienteService {
 	private RepositorioEndereco enderecoRepository;
 
 	public Cliente buscarCliente(Integer id) { // sempre que for pesquisar por id
+		
+		UserSecurity user = UserService.autheticaded();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> cliente = repo.findById(id);
 		return cliente.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ". Tipo: " + Cliente.class.getName()));
